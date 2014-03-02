@@ -1,49 +1,133 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity" > 
 
-    <TextView
-        android:id="@+id/tv"        
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <TextView      
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#00FF00"
+        android:background="#696969"
+        android:textStyle="bold"
+        android:text="微信流量监控" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80sp"
+        android:layout_marginTop="20dip" >
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="78sp"
+            android:layout_height="78sp"
+            android:src="@drawable/ic_launcher" 
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/gprs"
+            android:layout_width="40sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_toRightOf="@id/img"
+            android:layout_marginLeft="10sp"
+            android:text="3G:"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_3g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_toRightOf="@id/gprs"
+            android:text="0"
+            android:textColor="#FF0000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/mb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"          
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="10sp"
+            android:layout_toRightOf="@id/tv_3g"         
+            android:text="MB"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/wifi"
+            android:layout_width="40sp"
+            android:layout_height="22sp"                    
+            android:layout_toRightOf="@id/img"
+            android:layout_marginLeft="10sp"
+            android:text="@string/wifi"
+            android:layout_alignParentBottom="true"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="32sp"                     
+            android:layout_toRightOf="@id/wifi"
+            android:layout_marginLeft="20sp"
+            android:layout_alignParentBottom="true"
+            android:text="0"
+            android:textColor="#0000FF"          
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="22sp"          
+            android:layout_marginLeft="5sp"           
+            android:layout_toRightOf="@id/tv_wifi"          
+            android:text="MB"
+            android:textSize="20sp" 
+            android:layout_alignParentBottom="true"/>
+        
+    </RelativeLayout>
     
-     <TextView
-        android:id="@+id/tv_uid"        
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-     
-     <Button
-             android:id="@+id/button_getUID"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="20dip"
-             android:layout_marginTop="10dip"
-             android:text="显示微信的 UID" />      
+    <RelativeLayout      
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical">
+	    
+        <TextView 
+            android:id="@+id/tv_uid"
+            android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dip" 
+	        android:textSize="20sp"	           
+	        android:text="UID:"/>
+        
+        <Button
+	        android:id="@+id/button_init"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"       
+	       	android:layout_alignParentBottom="true"
+	        android:text="初始化数据库，只能点击一次哦" />
+        
+        <Button
+	        android:id="@+id/button_check"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"        
+	      	android:layout_above="@id/button_init"
+	        android:text="查看微信当前已使用流量" />
 
-         <Button
-             android:id="@+id/button_check"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="20dip"
-             android:layout_marginTop="10dip"
-             android:text="查看微信当前已使用流量" />
+	    <Button
+	        android:id="@+id/button_getUID"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"   
+	        android:layout_above="@id/button_check"
+	        android:text="显示微信的 UID" />
+  
+    </RelativeLayout>
 
-            <Button
-             android:id="@+id/button_init"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="20dip"
-             android:layout_marginTop="10dip"
-             android:text="初始化数据库，只能点击一次哦" />
-         
-     </LinearLayout>
-
+</LinearLayout>

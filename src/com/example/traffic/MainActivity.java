@@ -17,10 +17,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.telephony.TelephonyManager;
 import android.text.Spannable;
 import android.text.method.MovementMethod;
@@ -31,12 +33,14 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
-	private TextView tv;
+	private TextView tv_3g;
+	private TextView tv_wifi;
 	private TextView tv_uid;
 	private Button bt_init;
 	private Button bt_check;	
@@ -44,6 +48,10 @@ public class MainActivity extends Activity {
 	private int uid = 10029;//默认UID 10029
 	private SharedPreferences sp;
 	private Editor editor;  
+	private ImageView img;
+	private PackageManager pm;
+	private ApplicationInfo appInfo;
+	private Drawable appIcon;
 	
 
 	@Override
@@ -51,16 +59,33 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		tv = (TextView)findViewById(R.id.tv);		
-		tv.setText("微信已经使用流量 ： ");
+		tv_3g = (TextView)findViewById(R.id.tv_3g);		
+		//tv_3g.setText("微信已经使用流量 ： ");
+		tv_wifi = (TextView)findViewById(R.id.tv_wifi);	
+		//tv_wifi.setText("");
 		tv_uid = (TextView)findViewById(R.id.tv_uid);	
 		tv_uid.setText("微信的UID ： ");
-		tv_uid.setMovementMethod(ScrollingMovementMethod.getInstance());
+		//tv_uid.setMovementMethod(ScrollingMovementMethod.getInstance());
+		img = (ImageView)findViewById(R.id.img);
 		bt_check = (Button)findViewById(R.id.button_check);
 		bt_init = (Button)findViewById(R.id.button_init);
 		bt_uid = (Button)findViewById(R.id.button_getUID);
+		//持久化对象
 		sp = this.getSharedPreferences("SP", MODE_PRIVATE);
 		editor = sp.edit();
+		
+		//设置图片
+		pm = getPackageManager();
+		try 
+		{
+			appInfo = pm.getApplicationInfo("com.tencent.mm", PackageManager.GET_META_DATA);
+			appIcon = pm.getApplicationIcon(appInfo);
+			img.setImageDrawable(appIcon);
+		} 
+		catch (Exception e) 
+		{
+			// TODO: handle exception
+		}
 		
 		//查看微信的ＵＩＤ
 		bt_uid.setOnClickListener(new View.OnClickListener() {
@@ -254,9 +279,7 @@ public class MainActivity extends Activity {
 		//wifi流量
 		double wifiTraffic = (double)total - shujuTraffic;
 		
-		tv.setText("微信已经使用3G流量 ： "+String.valueOf(shujuTraffic/1024) + "KB | "  + 
-						String.format("%.2f", (shujuTraffic/1024.0/1024.0))+ "MB \r\n" +
-						"微信已经使用wifi流量 ： " + String.valueOf((total-shujuTraffic)/1024) + "KB  | "  +
-						String.format("%.2f", (wifiTraffic/1024.0/1024.0))+ "MB");
+		tv_3g.setText(String.format("%.2f", (shujuTraffic/1024.0/1024.0)));
+		tv_wifi.setText(String.format("%.2f", (wifiTraffic/1024.0/1024.0)));
 	}
 }
