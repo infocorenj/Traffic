@@ -16,7 +16,6 @@ import android.net.wifi.WifiManager;
 
 public class WifiStateReceiver extends BroadcastReceiver 
 {
-
 	private int uid = 10029;
 	@Override
 	public void onReceive(Context context, Intent intent) 
@@ -38,8 +37,7 @@ public class WifiStateReceiver extends BroadcastReceiver
 			} 
 			catch (Exception e) 
 			{
-				// TODO: handle exception
-				initDB(db);
+				throw new Exception();
 			}
 			
 			//如果wifi状态发生改变
@@ -108,12 +106,7 @@ public class WifiStateReceiver extends BroadcastReceiver
 		catch (Exception e) 
 		{
 			// TODO: handle exception
+			//初始化数据库
 		}
     }
-	
-	//初始化数据库
-	public void initDB(SQLiteDatabase db)
-	{
-		new MainActivity().initDatabase();
-	}
 }
