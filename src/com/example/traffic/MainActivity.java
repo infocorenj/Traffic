@@ -87,6 +87,13 @@ public class MainActivity extends Activity {
 			// TODO: handle exception
 		}
 		
+		//判断并显示
+		boolean isInit = sp.getBoolean("isInit", false);
+		if(isInit)
+		{
+			checkTraffic(null);	
+		}
+			
 		//查看微信的ＵＩＤ
 		bt_uid.setOnClickListener(new View.OnClickListener() {
 					
@@ -103,7 +110,22 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v)
 			{
-				checkTraffic(v);					
+				boolean isInit = sp.getBoolean("isInit", false);
+				if(!isInit)
+				{
+					Toast toast = Toast.makeText(getApplicationContext(),
+						     "亲，还没初始化数据库呢！ ！！", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}
+				else 
+				{
+					checkTraffic(v);
+					Toast toast = Toast.makeText(getApplicationContext(),
+						     "数据已刷新！", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}					
 			}
 		});
 		
@@ -202,7 +224,7 @@ public class MainActivity extends Activity {
 	
 	//点击查看流量；相当于点击排行版时计算并显示
 	public void checkTraffic(View v)
-	{
+	{				
 		//获取UID
 		uid = getUIDOfMM();
 				
