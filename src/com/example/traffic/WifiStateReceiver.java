@@ -114,31 +114,6 @@ public class WifiStateReceiver extends BroadcastReceiver
 	//初始化数据库
 	public void initDB(SQLiteDatabase db)
 	{
-		db.execSQL("CREATE TABLE traffic (id INTEGER PRIMARY KEY AUTOINCREMENT,  uid INTEGER, " +
-				"wifi_1 INTEGER, wifi_2 INTEGER, wifi_total INTEGER, last_total INTEGER," +
-				"since_boot INTEGER, total INTEGER, flag INTEGER )");
-		
-		try {
-			uid = new MainActivity().getUIDOfMM();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}	
-		
-		long since_boot = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);	
-		if(since_boot < 0 )
-			since_boot = 0;
-		
-		ContentValues values = new ContentValues();	
-		values.put("id", 1);
-		values.put("uid", uid);
-		values.put("wifi_1", since_boot);
-		values.put("wifi_2", -1);
-		values.put("wifi_total", since_boot);
-		values.put("last_total", 0);
-		values.put("since_boot", 0);
-		values.put("total", 0);
-		values.put("flag", 0);
-		
-		db.insert("traffic", null, values);	
+		new MainActivity().initDatabase();
 	}
 }
