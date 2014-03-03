@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 	private Button bt_check;	
 	private Button bt_uid;
 	private Button bt_checkwifi;
-	private int uid = 10029;//Ä¬ÈÏUID 10029
+	private int uid = 10029;//Ä¬ï¿½ï¿½UID 10029
 	private SharedPreferences sp;
 	private Editor editor;  
 	private ImageView img;
@@ -62,22 +62,22 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		tv_3g = (TextView)findViewById(R.id.tv_3g);		
-		//tv_3g.setText("Î¢ÐÅÒÑ¾­Ê¹ÓÃÁ÷Á¿ £º ");
+		//tv_3g.setText("Î¢ï¿½ï¿½ï¿½Ñ¾ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ");
 		tv_wifi = (TextView)findViewById(R.id.tv_wifi);	
 		//tv_wifi.setText("");
 		tv_uid = (TextView)findViewById(R.id.tv_uid);	
-		tv_uid.setText("Î¢ÐÅµÄUID £º ");
+		tv_uid.setText("Î¢ï¿½Åµï¿½UID ï¿½ï¿½ ");
 		//tv_uid.setMovementMethod(ScrollingMovementMethod.getInstance());
 		img = (ImageView)findViewById(R.id.img);
 		bt_check = (Button)findViewById(R.id.button_check);
 		bt_init = (Button)findViewById(R.id.button_init);
 		bt_uid = (Button)findViewById(R.id.button_getUID);
 		bt_checkwifi = (Button)findViewById(R.id.button_checkwifi);
-		//³Ö¾Ã»¯¶ÔÏó
+		//ï¿½Ö¾Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
 		sp = this.getSharedPreferences("SP", MODE_PRIVATE);
 		editor = sp.edit();
 		
-		//ÉèÖÃÍ¼Æ¬
+		//ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 		pm = getPackageManager();
 		try 
 		{
@@ -90,24 +90,24 @@ public class MainActivity extends Activity {
 			// TODO: handle exception
 		}
 		
-		//ÅÐ¶Ï²¢ÏÔÊ¾
+		//ï¿½Ð¶Ï²ï¿½ï¿½ï¿½Ê¾
 		boolean isInit = sp.getBoolean("isInit", false);
 		if(isInit)
 		{
 			checkTraffic(null);	
 		}
 			
-		//²é¿´Î¢ÐÅµÄ£Õ£É£Ä
+		//ï¿½é¿´Î¢ï¿½ÅµÄ£Õ£É£ï¿½
 		bt_uid.setOnClickListener(new View.OnClickListener() {
 					
 			@Override
 			public void onClick(View v) 
 			{						
-				tv_uid.setText("Î¢ÐÅµÄUID £º " + String.valueOf(getUIDOfMM()));
+				tv_uid.setText("Î¢ï¿½Åµï¿½UID ï¿½ï¿½ " + String.valueOf(getUIDOfMM()));
 			}
 		});
 		
-		//²é¿´µ±Ç°Á÷Á¿
+		//ï¿½é¿´ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
 		bt_check.setOnClickListener(new View.OnClickListener() {
 				
 			@Override
@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
 				if(!isInit)
 				{
 					Toast toast = Toast.makeText(getApplicationContext(),
-						     "Ç×£¬»¹Ã»³õÊ¼»¯Êý¾Ý¿âÄØ£¡ £¡£¡", Toast.LENGTH_LONG);
+						     "ï¿½×£ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ø£ï¿½ ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}
@@ -125,14 +125,14 @@ public class MainActivity extends Activity {
 				{
 					checkTraffic(v);
 					Toast toast = Toast.makeText(getApplicationContext(),
-						     "Êý¾ÝÒÑË¢ÐÂ£¡", Toast.LENGTH_SHORT);
+						     "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½Â£ï¿½", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}					
 			}
 		});
 		
-		//³õÊ¼»¯Êý¾Ý¿â
+		//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
 		bt_init.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -140,11 +140,11 @@ public class MainActivity extends Activity {
 			{
 				// TODO Auto-generated method stub	
 				boolean isInit = sp.getBoolean("isInit", false);
-				//ÅÐ¶ÏÊÇ·ñÒÑ¾­³õÊ¼»¯
+				//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 				if(isInit)
 				{
 					Toast toast = Toast.makeText(getApplicationContext(),
-						     "Ç×£¬ÒÑ¾­³õÊ¼»¯¹ýÁËÅ¶£¡ £¡£¡", Toast.LENGTH_LONG);
+						     "ï¿½×£ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}
@@ -155,7 +155,7 @@ public class MainActivity extends Activity {
 					editor.commit();
 					
 					Toast toast = Toast.makeText(getApplicationContext(),
-						     "³õÊ¼»¯ºÃÀ²£¡²»ÒªÔÙµãÎÒÁËÅ¶ £¡", Toast.LENGTH_LONG);
+						     "ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ùµï¿½ï¿½ï¿½ï¿½ï¿½Å¶ ï¿½ï¿½", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}								
@@ -168,21 +168,21 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				//ÅÐ¶ÏwifiÊÇ·ñ¿ÉÓÃ								
+				//ï¿½Ð¶ï¿½wifiï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½								
 				try 
 				{
 					boolean isWifiAvailable = Util.isWifiAvailable(MainActivity.this);	
 					if(isWifiAvailable)
 					{
 						Toast toast = Toast.makeText(getApplicationContext(),
-							     "wifi ¿ÉÓÃ£¡", Toast.LENGTH_LONG);
+							     "wifi ï¿½ï¿½ï¿½Ã£ï¿½", Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();						
 					}
 					else
 					{
 						Toast toast = Toast.makeText(getApplicationContext(),
-							     "wifi ²»¿ÉÓÃ£¡", Toast.LENGTH_LONG);
+							     "wifi ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½", Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();	
 					}
@@ -191,7 +191,7 @@ public class MainActivity extends Activity {
 				{
 					// TODO: handle exception
 					Toast toast = Toast.makeText(getApplicationContext(),
-						     "error£¡", Toast.LENGTH_LONG);
+						     "errorï¿½ï¿½", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();	
 				}
@@ -207,7 +207,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	//»ñÈ¡Î¢ÐÅµÄUID
+	//ï¿½ï¿½È¡Î¢ï¿½Åµï¿½UID
 	public int getUIDOfMM()
 	{
 		PackageManager  pm = getPackageManager();
@@ -230,23 +230,23 @@ public class MainActivity extends Activity {
 		return uidOfMM;
 	}
 		
-	//³õÊ¼»¯Êý¾Ý¿â
+	//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
 	public void initDatabase()
 	{
 		SQLiteDatabase db = openOrCreateDatabase("test.db", Context.MODE_PRIVATE, null);  
 		db.execSQL("DROP TABLE IF EXISTS traffic");
-		//´´½¨traffic±í
+		//ï¿½ï¿½ï¿½ï¿½trafficï¿½ï¿½
 		db.execSQL("CREATE TABLE traffic (id INTEGER PRIMARY KEY AUTOINCREMENT,  uid INTEGER, " +
 				"wifi_1 INTEGER, wifi_2 INTEGER, wifi_total INTEGER, last_total INTEGER," +
 				"since_boot INTEGER, total INTEGER, flag INTEGER )");
-		//»ñÈ¡UID
+		//ï¿½ï¿½È¡UID
 		uid = getUIDOfMM();
-		//¿ª»úÒÔÀ´µÄÁ÷Á¿£»Ö»Í³¼ÆÏÖÔÚ¿ªÊ¼µÄÁ÷Á¿£¬Ö®Ç°µÄ²»Ëã
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»Í³ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½Ä²ï¿½ï¿½ï¿½
 		long since_boot = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);	
-		//¸ÃÖµ¿ÉÄÜÎª-2£¬ÐèÒªÅÐ¶Ï
+		//ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îª-2ï¿½ï¿½ï¿½ï¿½Òªï¿½Ð¶ï¿½
 		if(since_boot < 0 )
 			since_boot = 0;
-		//ÉèÖÃ³õÊ¼Öµ
+		//ï¿½ï¿½ï¿½Ã³ï¿½Ê¼Öµ
 		ContentValues values = new ContentValues();	
 		values.put("id", 1);
 		values.put("uid", uid);
@@ -257,12 +257,10 @@ public class MainActivity extends Activity {
 		values.put("since_boot", 0);
 		values.put("total", 0);
 		
-		//ÅÐ¶ÏwifiÊÇ·ñ¿ªÆô
-		boolean isWifiAlive = false;
+		//ï¿½Ð¶ï¿½wifiï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½
+		boolean isWifiAlive = Util.isWifiAvailable(MainActivity.this);
 		try 
 		{
-			WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-			isWifiAlive = wifiManager.isWifiEnabled();
 			if(isWifiAlive)
 			{
 				values.put("flag", 1);
@@ -281,28 +279,28 @@ public class MainActivity extends Activity {
 		db.insert("traffic", null, values);	
 	}
 	
-	//µã»÷²é¿´Á÷Á¿£»Ïàµ±ÓÚµã»÷ÅÅÐÐ°æÊ±¼ÆËã²¢ÏÔÊ¾
+	//ï¿½ï¿½ï¿½ï¿½ï¿½é¿´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½àµ±ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð°ï¿½Ê±ï¿½ï¿½ï¿½ã²¢ï¿½ï¿½Ê¾
 	public void checkTraffic(View v)
 	{	
 		boolean isInit = sp.getBoolean("isInit", false);
-		//ÅÐ¶ÏÊÇ·ñÒÑ¾­³õÊ¼»¯
+		//ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 		if(!isInit)
 		{
 			Toast toast = Toast.makeText(getApplicationContext(),
-				     "Ç×£¬Êý¾Ý¿â»¹Ã»³õÊ¼»¯ÄØ £¡", Toast.LENGTH_LONG);
+				     "ï¿½×£ï¿½ï¿½ï¿½ï¿½Ý¿â»¹Ã»ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();	
 			
 			return;
 		}
 		
-		//»ñÈ¡UID
+		//ï¿½ï¿½È¡UID
 		uid = getUIDOfMM();
 				
 		SQLiteDatabase db = openOrCreateDatabase("test.db",  Context.MODE_PRIVATE, null); 
 		
-		/*¿ÉÄÜ¹Ø»úÊ±wifi¿ª×Å£¬ÕâÑù¿ª»úºówifiÒ²¾Í¿ª×Å£¬ÄÇÃ´receiver¾ÍÎÞ·¨¼ÇÂ¼ÏàÓ¦wifi´ò¿ªÊ±µÄwifi_1,ËùÒÔÔÚ¹Ø»úÊ±
-		      ÓÃÕâ¸öÖµ±£´æwifi×´Ì¬*/
+		/*ï¿½ï¿½ï¿½Ü¹Ø»ï¿½Ê±wifiï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½wifiÒ²ï¿½Í¿ï¿½ï¿½Å£ï¿½ï¿½ï¿½Ã´receiverï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Ó¦wifiï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½wifi_1,ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹Ø»ï¿½Ê±
+		      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½wifi×´Ì¬*/
 		/*long since_boot_early = 0;
 		
 		Cursor cur = db.rawQuery("SELECT * FROM traffic WHERE uid = ?", new String[]{String.valueOf(uid)});		
@@ -311,12 +309,12 @@ public class MainActivity extends Activity {
 			since_boot_early = cur.getInt(cur.getColumnIndex("since_boot"));
 		}*/
 		
-		//¿ª»úµ½ÏÖÔÚµÄÁ÷Á¿
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½
 		long since_boot = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);	
 		if(since_boot < 0)
 			since_boot = 0;		
 		
-		//´ÓÊý¾Ý¿âÖÐ¶ÁÈ¡ÏëÓ¦Êý¾Ý
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ð¶ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
 		long total = 0;
 		long wifi_1 = 0;		
 		long wifi_total = 0;
@@ -333,18 +331,18 @@ public class MainActivity extends Activity {
 			break;
 		}
 		
-		//¼ÆËãµ½checkÎªÖ¹×ÜµÄÁ÷Á¿
+		//ï¿½ï¿½ï¿½ãµ½checkÎªÖ¹ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½
 		total = last_total + since_boot;
 		
 		ContentValues cv = new ContentValues();  	
 		cv.put("total", total);
-		//¸üÐÂ×ÜµÄÁ÷Á¿
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½
 		db.update("traffic", cv, "uid= ?", new String[]{String.valueOf(uid)}); 
 		
-		//3GÁ÷Á¿
+		//3Gï¿½ï¿½ï¿½ï¿½
 		long shujuTraffic = 0;
 		
-		//Èç¹ûµ±Ç°wifiÒÑ¹Ø±Õ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°wifiï¿½Ñ¹Ø±ï¿½
 		if(flag == 0)
 		{
 			shujuTraffic = total - wifi_total;			
@@ -365,7 +363,7 @@ public class MainActivity extends Activity {
 			}		
 		}	
 		
-		//wifiÁ÷Á¿
+		//wifiï¿½ï¿½ï¿½ï¿½
 		double wifiTraffic = (double)total - shujuTraffic;
 		
 		tv_3g.setText(String.format("%.2f", (shujuTraffic/1024.0/1024.0)));
