@@ -83,8 +83,6 @@ public class WifiStateReceiver extends BroadcastReceiver
 				ContentValues cv = new ContentValues(); 
 				
 				if(wifi_2 - wifi_1 < 0)
-<<<<<<< HEAD
-=======
 				{
 					cv.put("wifi_total", 0 + wifi_total);
 				}
@@ -107,13 +105,12 @@ public class WifiStateReceiver extends BroadcastReceiver
 				int wifistate = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
 	        
 				if (wifistate == WifiManager.WIFI_STATE_DISABLED) 
->>>>>>> tmp
+
 				{
 					cv.put("wifi_total", 0 + wifi_total);
 				}
 				else 
 				{
-<<<<<<< HEAD
 					cv.put("wifi_total", wifi_2 - wifi_1 + wifi_total);
 				}
 				cv.put("wifi_1", 0);
@@ -124,7 +121,6 @@ public class WifiStateReceiver extends BroadcastReceiver
 
 				db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
 			}					
-=======
 					//开启
 					//记录当前uid应用的流量.
 					long wifi_1 = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);							
@@ -138,7 +134,6 @@ public class WifiStateReceiver extends BroadcastReceiver
 					db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});  
 				}          
 	        }*/
->>>>>>> tmp
 		} 
 		catch (Exception e) 
 		{
