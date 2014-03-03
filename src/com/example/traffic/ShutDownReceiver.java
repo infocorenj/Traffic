@@ -42,6 +42,8 @@ public class ShutDownReceiver extends BroadcastReceiver
 			{  				
 				last_total = c.getInt(c.getColumnIndex("last_total"));			
 				flag = c.getInt(c.getColumnIndex("flag"));
+				wifi_1 = c.getInt(c.getColumnIndex("wifi_1"));
+				wifi_total = c.getInt(c.getColumnIndex("wifi_total"));
 				break;
 			}
 			
@@ -65,9 +67,8 @@ public class ShutDownReceiver extends BroadcastReceiver
 				}
 				cv.put("wifi_1", 0);
 				cv.put("wifi_2", -1);
-				cv.put("since_boot", -1);
-				cv.put("last_total", since_boot + last_total); 
-				cv.put("flag", 0);
+				cv.put("since_boot", 0);
+				cv.put("last_total", since_boot + last_total); 				
 				
 				db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
 			}

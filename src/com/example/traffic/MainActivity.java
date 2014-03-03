@@ -224,7 +224,19 @@ public class MainActivity extends Activity {
 	
 	//点击查看流量；相当于点击排行版时计算并显示
 	public void checkTraffic(View v)
-	{				
+	{	
+		boolean isInit = sp.getBoolean("isInit", false);
+		//判断是否已经初始化
+		if(!isInit)
+		{
+			Toast toast = Toast.makeText(getApplicationContext(),
+				     "亲，数据库还没初始化呢 ！", Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();	
+			
+			return;
+		}
+		
 		//获取UID
 		uid = getUIDOfMM();
 				
@@ -232,13 +244,13 @@ public class MainActivity extends Activity {
 		
 		/*可能关机时wifi开着，这样开机后wifi也就开着，那么receiver就无法记录相应wifi打开时的wifi_1,所以在关机时
 		      用这个值保存wifi状态*/
-		long since_boot_early = 0;
+		/*long since_boot_early = 0;
 		
 		Cursor cur = db.rawQuery("SELECT * FROM traffic WHERE uid = ?", new String[]{String.valueOf(uid)});		
 		while (cur.moveToNext()) 
 		{  
 			since_boot_early = cur.getInt(cur.getColumnIndex("since_boot"));
-		}
+		}*/
 		
 		//开机到现在的流量
 		long since_boot = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);	
@@ -274,13 +286,9 @@ public class MainActivity extends Activity {
 		long shujuTraffic = 0;
 		
 		//如果当前wifi已关闭
-		if(flag == 0 && since_boot_early != -1)
+		if(flag == 0)
 		{
-			shujuTraffic = total - wifi_total;
-			/*Toast toast = Toast.makeText(getApplicationContext(),
-				     "WIFI 已关闭！", Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.CENTER, 0, 0);
-			toast.show();*/
+			shujuTraffic = total - wifi_total;			
 		}
 		else 
 		{
