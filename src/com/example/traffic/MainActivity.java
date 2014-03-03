@@ -168,23 +168,21 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				//判断wifi是否开启
-				boolean isWifiAlive = false;
+				//判断wifi是否可用								
 				try 
 				{
-					WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-					isWifiAlive = wifiManager.isWifiEnabled();
-					if(isWifiAlive)
+					boolean isWifiAvailable = Util.isWifiAvailable(MainActivity.this);	
+					if(isWifiAvailable)
 					{
 						Toast toast = Toast.makeText(getApplicationContext(),
-							     "wifi 已开启 ！", Toast.LENGTH_LONG);
+							     "wifi 可用！", Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();	
+						toast.show();						
 					}
 					else
 					{
 						Toast toast = Toast.makeText(getApplicationContext(),
-							     "wifi 已关闭！", Toast.LENGTH_LONG);
+							     "wifi 不可用！", Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();	
 					}
@@ -192,7 +190,10 @@ public class MainActivity extends Activity {
 				catch (Exception e) 
 				{
 					// TODO: handle exception
-					
+					Toast toast = Toast.makeText(getApplicationContext(),
+						     "error！", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();	
 				}
 			}
 		});
