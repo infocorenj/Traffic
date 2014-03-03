@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo.State;
 import android.net.TrafficStats;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.R.integer;
 import android.app.Activity;
@@ -45,6 +46,7 @@ public class MainActivity extends Activity {
 	private Button bt_init;
 	private Button bt_check;	
 	private Button bt_uid;
+	private Button bt_checkwifi;
 	private int uid = 10029;//默认UID 10029
 	private SharedPreferences sp;
 	private Editor editor;  
@@ -70,6 +72,7 @@ public class MainActivity extends Activity {
 		bt_check = (Button)findViewById(R.id.button_check);
 		bt_init = (Button)findViewById(R.id.button_init);
 		bt_uid = (Button)findViewById(R.id.button_getUID);
+		bt_checkwifi = (Button)findViewById(R.id.button_checkwifi);
 		//持久化对象
 		sp = this.getSharedPreferences("SP", MODE_PRIVATE);
 		editor = sp.edit();
@@ -158,6 +161,41 @@ public class MainActivity extends Activity {
 				}								
 			}
 		});	
+		
+		bt_checkwifi.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				//判断wifi是否开启
+				boolean isWifiAlive = false;
+				try 
+				{
+					WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+					isWifiAlive = wifiManager.isWifiEnabled();
+					if(isWifiAlive)
+					{
+						Toast toast = Toast.makeText(getApplicationContext(),
+							     "wifi 已开启 ！", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();	
+					}
+					else
+					{
+						Toast toast = Toast.makeText(getApplicationContext(),
+							     "wifi 已关闭！", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();	
+					}
+				} 
+				catch (Exception e) 
+				{
+					// TODO: handle exception
+					
+				}
+			}
+		});
 				
 	}
 
@@ -217,8 +255,28 @@ public class MainActivity extends Activity {
 		values.put("last_total", 0);
 		values.put("since_boot", 0);
 		values.put("total", 0);
-		values.put("flag", 0);
 		
+		//判断wifi是否开启
+		boolean isWifiAlive = false;
+		try 
+		{
+			WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+			isWifiAlive = wifiManager.isWifiEnabled();
+			if(isWifiAlive)
+			{
+				values.put("flag", 1);
+			}
+			else
+			{
+				values.put("flag", 0);
+			}
+		} 
+		catch (Exception e) 
+		{
+			// TODO: handle exception
+			values.put("flag", 0);
+		}
+			
 		db.insert("traffic", null, values);	
 	}
 	

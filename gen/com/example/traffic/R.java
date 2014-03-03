@@ -24,8 +24,9 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000a;
+        public static final int action_settings=0x7f08000b;
         public static final int button_check=0x7f080008;
+        public static final int button_checkwifi=0x7f08000a;
         public static final int button_getUID=0x7f080009;
         public static final int button_init=0x7f080007;
         public static final int gprs=0x7f080001;

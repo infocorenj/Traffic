@@ -127,6 +127,14 @@
 	        android:layout_height="wrap_content"   
 	        android:layout_above="@id/button_check"
 	        android:text="显示微信的 UID" />
+	    
+	    <Button
+	        android:id="@+id/button_checkwifi"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"   
+	        android:layout_above="@id/button_getUID"
+	        android:text="查看wifi状态" />
+	    
   
     </RelativeLayout>
 
