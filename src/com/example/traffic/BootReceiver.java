@@ -1,21 +1,20 @@
 package com.example.traffic;
 
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
+
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
-import android.view.Gravity;
-import android.widget.Toast;
+
 
 public class BootReceiver extends BroadcastReceiver 
 {
 	@Override
 	public void onReceive(Context context, Intent intent) 
-	{	
+	{
+		if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+			Intent newIntent = new Intent(context, MainActivity.class);
+			newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 注意，必须添加这个标记，否则启动会失败
+			context.startActivity(newIntent);
+		}
 	}
 }
