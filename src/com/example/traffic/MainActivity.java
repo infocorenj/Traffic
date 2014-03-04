@@ -258,9 +258,9 @@ public class MainActivity extends Activity {
 		values.put("total", 0);
 		
 		//�ж�wifi�Ƿ�����
-		boolean isWifiAlive = Util.isWifiAvailable(MainActivity.this);
 		try 
 		{
+			boolean isWifiAlive = Util.isWifiAvailable(MainActivity.this);
 			if(isWifiAlive)
 			{
 				values.put("flag", 1);
