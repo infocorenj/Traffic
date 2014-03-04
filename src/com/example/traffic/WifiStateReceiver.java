@@ -1,5 +1,4 @@
 package com.example.traffic;
-<<<<<<< HEAD
 
 import java.util.List;
 
@@ -118,5 +117,3 @@ public class WifiStateReceiver extends BroadcastReceiver
 		}
     }
 }
-=======
->>>>>>> cdd17037131371c6747ed2e5c35f43936ac5d1de
