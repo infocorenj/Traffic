@@ -257,12 +257,10 @@ public class MainActivity extends Activity {
 		values.put("since_boot", 0);
 		values.put("total", 0);
 		
-		//判断wifi是否开启
-		boolean isWifiAlive = false;
+		//判断wifi是否可用	
 		try 
-		{
-			WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-			isWifiAlive = wifiManager.isWifiEnabled();
+		{	
+			boolean isWifiAlive = Util.isWifiAvailable(MainActivity.this);		
 			if(isWifiAlive)
 			{
 				values.put("flag", 1);

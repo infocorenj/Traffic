@@ -77,19 +77,9 @@ public class WifiStateReceiver extends BroadcastReceiver
 					flag = c.getInt(c.getColumnIndex("flag"));
 					break;
 				}
-<<<<<<< HEAD
+				
 				//判断是否是从wifi切换到其他网络
 				if(flag == 1)
-=======
-				
-				ContentValues cv = new ContentValues(); 
-				
-				if(wifi_2 - wifi_1 < 0)
-				{
-					cv.put("wifi_total", 0 + wifi_total);
-				}
-				else 
->>>>>>> 9585c345fd970a9f62e1d82d4b21d48c1b6407f3
 				{
 					long wifi_2 = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);	
 					if(wifi_2 < 0)
@@ -111,54 +101,14 @@ public class WifiStateReceiver extends BroadcastReceiver
 					cv.put("total", last_total + wifi_2);
 					cv.put("flag", 0);
 
-<<<<<<< HEAD
-					db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
-=======
-				db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
-			}
-			
-			//如果wifi状态发生改变
-			/*if (intent.getAction().equals(WifiManager.WIFI_STATE_CHANGED_ACTION))    
-			{      
-				int wifistate = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
-	        
-				if (wifistate == WifiManager.WIFI_STATE_DISABLED) 
 
-				{
-					cv.put("wifi_total", 0 + wifi_total);
->>>>>>> 9585c345fd970a9f62e1d82d4b21d48c1b6407f3
+					db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
 				}
 				else
 				{
-<<<<<<< HEAD
 					
-				}								
-			}					
-=======
-					cv.put("wifi_total", wifi_2 - wifi_1 + wifi_total);
 				}
-				cv.put("wifi_1", 0);
-				cv.put("wifi_2", -1);
-				cv.put("since_boot", 0);
-				cv.put("total", last_total + wifi_2);
-				cv.put("flag", 0);
-
-				db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
-			}					
-					//开启
-					//记录当前uid应用的流量.
-					long wifi_1 = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);							
-					if(wifi_1 <0 )
-						wifi_1 = 0;
-					
-					ContentValues cv = new ContentValues();  
-					cv.put("wifi_1", wifi_1);  
-					cv.put("flag", 1);
-					
-					db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});  
-				}          
-	        }*/
->>>>>>> 9585c345fd970a9f62e1d82d4b21d48c1b6407f3
+			}
 		} 
 		catch (Exception e) 
 		{
