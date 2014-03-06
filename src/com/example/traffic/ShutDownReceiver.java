@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.TrafficStats;
@@ -68,7 +70,7 @@ public class ShutDownReceiver extends BroadcastReceiver
 				cv.put("wifi_1", 0);
 				cv.put("wifi_2", -1);
 				cv.put("since_boot", 0);
-				cv.put("last_total", since_boot + last_total); 				
+				cv.put("last_total", since_boot + last_total);				
 				
 				db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
 			}
@@ -76,6 +78,6 @@ public class ShutDownReceiver extends BroadcastReceiver
 		catch (Exception e) 
 		{
 			
-		}
+		}		
 	}
 }

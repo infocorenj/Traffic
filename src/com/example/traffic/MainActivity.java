@@ -16,6 +16,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
@@ -94,9 +95,16 @@ public class MainActivity extends Activity {
 		boolean isInit = sp.getBoolean("isInit", false);
 		if(isInit)
 		{
-			checkTraffic(null);	
+			updateTraffic();
+			showTraffic();
+			// 开启服务
+			if (!Util.isServiceRunning(this,
+					"com.example.traffic.trafficService")) {
+				startTrafficService();
+			}			
 		}
-			
+		
+		
 		//查看微信的ＵＩＤ
 		bt_uid.setOnClickListener(new View.OnClickListener() {
 					
@@ -123,7 +131,8 @@ public class MainActivity extends Activity {
 				}
 				else 
 				{
-					checkTraffic(v);
+					updateTraffic();
+					showTraffic();
 					Toast toast = Toast.makeText(getApplicationContext(),
 						     "数据已刷新！", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.CENTER, 0, 0);
@@ -151,13 +160,13 @@ public class MainActivity extends Activity {
 				else 
 				{
 					initDatabase();
-					editor.putBoolean("isInit", true);
-					editor.commit();
+					editor.putBoolean("isInit", true);													
+					editor.commit();											
 					
 					Toast toast = Toast.makeText(getApplicationContext(),
 						     "初始化好啦！不要再点我了哦 ！", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
+					toast.show();										
 				}								
 			}
 		});	
@@ -177,7 +186,8 @@ public class MainActivity extends Activity {
 						Toast toast = Toast.makeText(getApplicationContext(),
 							     "wifi 可用！", Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();						
+						toast.show();	
+						
 					}
 					else
 					{
@@ -185,6 +195,7 @@ public class MainActivity extends Activity {
 							     "wifi 不可用！", Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();	
+												
 					}
 				} 
 				catch (Exception e) 
@@ -198,13 +209,20 @@ public class MainActivity extends Activity {
 			}
 		});
 				
-	}
+	}	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	//开启定时统计服务
+	public void startTrafficService()
+	{
+		Intent serviceIntent = new Intent(this, trafficService.class);				
+		startService(serviceIntent);	
 	}
 	
 	//获取微信的UID
@@ -238,7 +256,7 @@ public class MainActivity extends Activity {
 		//创建traffic表
 		db.execSQL("CREATE TABLE traffic (id INTEGER PRIMARY KEY AUTOINCREMENT,  uid INTEGER, " +
 				"wifi_1 INTEGER, wifi_2 INTEGER, wifi_total INTEGER, last_total INTEGER," +
-				"since_boot INTEGER, total INTEGER, flag INTEGER )");
+				"since_boot INTEGER, total INTEGER, flag INTEGER, shuju_traffic INTEGER )");
 		//获取UID
 		uid = getUIDOfMM();
 		//开机以来的流量；只统计现在开始的流量，之前的不算
@@ -275,39 +293,19 @@ public class MainActivity extends Activity {
 			// TODO: handle exception
 			values.put("flag", 0);
 		}
+					
+		values.put("shuju_traffic", 0);
 			
 		db.insert("traffic", null, values);	
 	}
-	
-	//点击查看流量；相当于点击排行版时计算并显示
-	public void checkTraffic(View v)
-	{	
-		boolean isInit = sp.getBoolean("isInit", false);
-		//判断是否已经初始化
-		if(!isInit)
-		{
-			Toast toast = Toast.makeText(getApplicationContext(),
-				     "亲，数据库还没初始化呢 ！", Toast.LENGTH_LONG);
-			toast.setGravity(Gravity.CENTER, 0, 0);
-			toast.show();	
-			
-			return;
-		}
-		
+							
+	//更新当前数据
+	public void updateTraffic()
+	{				
 		//获取UID
 		uid = getUIDOfMM();
-				
-		SQLiteDatabase db = openOrCreateDatabase("test.db",  Context.MODE_PRIVATE, null); 
-		
-		/*可能关机时wifi开着，这样开机后wifi也就开着，那么receiver就无法记录相应wifi打开时的wifi_1,所以在关机时
-		      用这个值保存wifi状态*/
-		/*long since_boot_early = 0;
-		
-		Cursor cur = db.rawQuery("SELECT * FROM traffic WHERE uid = ?", new String[]{String.valueOf(uid)});		
-		while (cur.moveToNext()) 
-		{  
-			since_boot_early = cur.getInt(cur.getColumnIndex("since_boot"));
-		}*/
+		//打开数据库		
+		SQLiteDatabase db = openOrCreateDatabase("test.db",  Context.MODE_PRIVATE, null); 				
 		
 		//开机到现在的流量
 		long since_boot = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid);	
@@ -330,14 +328,12 @@ public class MainActivity extends Activity {
 			flag = c.getInt(c.getColumnIndex("flag"));
 			break;
 		}
-		
-		//计算到check为止总的流量
+				
 		total = last_total + since_boot;
 		
+		//存入相应的值
 		ContentValues cv = new ContentValues();  	
-		cv.put("total", total);
-		//更新总的流量
-		db.update("traffic", cv, "uid= ?", new String[]{String.valueOf(uid)}); 
+		cv.put("total", total);		
 		
 		//3G流量
 		long shujuTraffic = 0;
@@ -351,20 +347,48 @@ public class MainActivity extends Activity {
 		{
 			if(since_boot - wifi_1 < 0)
 			{
-				shujuTraffic = total - wifi_total;
-				cv = new ContentValues();
-				cv.put("wifi_1", 0);
-				
-				db.update("traffic", cv, "uid= ?", new String[]{String.valueOf(uid)}); 
+				shujuTraffic = total - wifi_total;				
+				cv.put("wifi_1", 0);								 
 			}
 			else 
 			{
 				shujuTraffic = total - wifi_total - (since_boot - wifi_1);
+				cv.put("wifi_1", since_boot);
 			}		
 		}	
 		
+		cv.put("shuju_traffic", shujuTraffic);
+		
 		//wifi流量
-		double wifiTraffic = (double)total - shujuTraffic;
+		double wifiTraffic = (double)total - shujuTraffic;		
+		
+		cv.put("wifi_total", wifiTraffic);
+		
+		db.update("traffic", cv, "uid = ?", new String[]{String.valueOf(uid)});
+	}
+	
+	//读取数据库，显示当前流量
+	public void showTraffic()
+	{
+		// 获取UID
+		uid = getUIDOfMM();
+		// 打开数据库
+		SQLiteDatabase db = openOrCreateDatabase("test.db",
+				Context.MODE_PRIVATE, null);
+		
+		// 从数据库中读取想应数据
+		long shujuTraffic = 0;
+		long wifiTraffic = 0;
+		
+		Cursor c = db.rawQuery("SELECT * FROM traffic WHERE uid = ?",
+				new String[] { String.valueOf(uid) });
+		
+		while (c.moveToNext())
+		{
+			shujuTraffic = c.getInt(c.getColumnIndex("shuju_traffic"));
+			wifiTraffic = c.getInt(c.getColumnIndex("wifi_total"));			
+			break;
+		}
 		
 		tv_3g.setText(String.format("%.2f", (shujuTraffic/1024.0/1024.0)));
 		tv_wifi.setText(String.format("%.2f", (wifiTraffic/1024.0/1024.0)));
